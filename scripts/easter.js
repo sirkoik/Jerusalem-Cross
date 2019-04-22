@@ -1,9 +1,12 @@
 const GROUND = -15;
+const DEFAULT_CAMERA_X = 5, DEFAULT_CAMERA_Y = 5, DEFAULT_CAMERA_Z = 5;
+
 
 var camera, renderer;
 var emitter;
 
 var animSpin = true;
+var lookAtFace = false;
 
 // scene and camera.
 var scene = new THREE.Scene();
@@ -18,7 +21,7 @@ var height = width / aspect;
 var camera = new THREE.OrthographicCamera( width / -2, width / 2, height / 2, height / -2, 0, 100 );
 //camera.position.z = 0;
 //camera.position = new THREE.Vector3(0,1,0);
-camera.position.set(5,5,5);
+camera.position.set( DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z );
 
 
 //console.log(camera.position);
@@ -37,7 +40,7 @@ controls.maxDistance = 100;
 //controls.minZoom = 10;
 //controls.maxZoom = 100;
 
-console.log(camera.position);
+//console.log(camera.position);
 
 //controls.maxPolarAngle = Math.PI / 2; // can't pivot below the floor plane.
 
@@ -154,7 +157,7 @@ function animate() {
         crossCube.rotation.y = 2 * Math.PI * rotateDeg / 360;
         
         //if (Math.floor(rotateDeg) % 90 == 0) 
-        console.log(rotateDeg);
+        //console.log(rotateDeg);
         
         //crossCube.rotation.y = Math.PI / 4;
         //crossCube.rotation.y += Math.PI / 1000;
@@ -169,7 +172,7 @@ function animate() {
         //crossCube.position.z = 4 * Math.sin(ctr);
         
         ctr = ctr + 0.02;
-    }
+    } 
 
     //flameOuter.material.opacity = 1.4 + Math.sin(ctr * 10);
     //flameOuter.material.opacity = 0.8;
@@ -182,6 +185,19 @@ function animate() {
 }
 
 // Interactive
+document.querySelector('#look-at-face').onclick = function(e) {
+    if (!lookAtFace) {
+        crossCube.rotation.y = 0;
+        animSpin = false;
+        camera.position.set( 0, 0, 5 );
+    } else {
+        animSpin = true;
+        camera.position.set( DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z );
+    }
+    
+    lookAtFace = !lookAtFace;
+}
+
 document.querySelector('#pause').onclick = function(e) {
     animSpin = !animSpin;
 }
