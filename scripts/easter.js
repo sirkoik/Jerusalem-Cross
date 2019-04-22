@@ -190,9 +190,14 @@ document.querySelector('#look-at-face').onclick = function(e) {
         crossCube.rotation.y = 0;
         animSpin = false;
         camera.position.set( 0, 0, 5 );
+        
+        this.textContent = 'Rotating view';
+        
     } else {
         animSpin = true;
         camera.position.set( DEFAULT_CAMERA_X, DEFAULT_CAMERA_Y, DEFAULT_CAMERA_Z );
+        
+        this.textContent = 'Face-on view';
     }
     
     lookAtFace = !lookAtFace;
